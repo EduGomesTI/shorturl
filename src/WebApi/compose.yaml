@@ -13,8 +13,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      postgres:
-        ipv4_address: 172.16.2.10
+      - postgres
     restart: unless-stopped
 
   pgadmin:
@@ -30,16 +29,12 @@ services:
     ports:
       - "${PGADMIN_PORT:-5050}:80"
     networks:
-      postgres:
-        ipv4_address: 172.16.2.20
+      - postgres
     restart: unless-stopped
 
 networks:
   postgres:
-    ipam:
-      driver: default
-      config:
-        - subnet: "172.16.2.0/24"
+
 
 volumes:
   postgres:
