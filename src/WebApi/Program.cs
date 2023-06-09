@@ -2,11 +2,16 @@ using Application;
 using Infrastructure;
 using Presentation;
 using Serilog;
+using WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
+
+builder.Services
+    .AddApiVersioningSetup()
+    .AddSwaggerExtension();
 
 builder.Services
     .AddApplication()
@@ -20,7 +25,7 @@ var app = builder.Build();
 
 if(app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+    //app.UseSwagger();
     app.UseSwaggerUI();
 }
 
