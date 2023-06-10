@@ -11,4 +11,6 @@ public class DatabaseOptions
     public int MaxRetryCount { get; set; }
 
     public int CommandTimeOut { get; set; }
+
+    public string MigrationHistoryTable { get; set; }
 }

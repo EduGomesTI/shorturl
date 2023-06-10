@@ -6,16 +6,6 @@
 * Entre no diretório:  `cd .\src\WebApi`
 * Rode este comando: `docker-compose up -d`
 
-
-### Environments
-Este compose contém as seguintes variáveis:
-
-* `POSTGRES_USER` o valor padrão é **postgres**
-* `POSTGRES_PASSWORD` o valor padrão é **12345**
-* `PGADMIN_PORT` o valor padrão é **5050**
-* `PGADMIN_DEFAULT_EMAIL` o valor padrão é **pgadmin4@pgadmin.org**
-* `PGADMIN_DEFAULT_PASSWORD` o valor padrão é **admin**
-
 ### Acesso ao Postgresql:
 * `localhost:5432`
 * **Username:** postgres (as a default)
@@ -31,3 +21,15 @@ Este compose contém as seguintes variáveis:
 * **Port** `5432`
 * **Username** as `POSTGRES_USER`, by default: `postgres`
 * **Password** as `POSTGRES_PASSWORD`, by default `12345`
+
+## Migrations
+
+### Tabela ShortUrl
+* Pelo Package Manager Console selecione Infrastructure como Default project
+* Add-Migration InitialShortUrl -Context ShortUrlDbContext
+* Update-Database -Context ShortUrlDbContext
+
+### Tabela Outbox
+* Pelo Package Manager Console selecione Infrastructure como Default project
+* Add-Migration InitialOutBox -Context OutboxDbContext
+* Update-Database -Context OutboxDbContext

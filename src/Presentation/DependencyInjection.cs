@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Carter;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Presentation
 {
@@ -6,7 +8,16 @@ namespace Presentation
     {
         public static IServiceCollection AddPresentation(this IServiceCollection services)
         {
+            services.AddCarter();
+
             return services;
+        }
+
+        public static WebApplication UsePresentation(this WebApplication app)
+        {
+            app.MapCarter();
+
+            return app;
         }
     }
 }

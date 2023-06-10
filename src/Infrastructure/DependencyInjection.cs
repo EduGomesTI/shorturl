@@ -1,4 +1,8 @@
-﻿using Infrastructure.Options;
+﻿using Application.Abstractions.Data;
+using Domain.Repositories;
+using Infrastructure.Options;
+using Infrastructure.Persistences.DbContexts;
+using Infrastructure.Persistences.Urls;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -9,7 +13,7 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.AddDbContext<DatabaseContext>((serviceprovider, dbContextOptionsBuilder) =>
+            services.AddDbContext<ShortUrlDbContext>((serviceprovider, dbContextOptionsBuilder) =>
             {
                 var databseOptions = serviceprovider.GetService<IOptions<DatabaseOptions>>()!.Value;
 
@@ -18,12 +22,42 @@ namespace Infrastructure
                     options.EnableRetryOnFailure(databseOptions.MaxRetryCount);
 
                     options.CommandTimeout(databseOptions.CommandTimeOut);
+
+                    options.MigrationsHistoryTable(databseOptions.MigrationHistoryTable);
                 });
+
+                dbContextOptionsBuilder.LogTo(x => Console.WriteLine(x));
 
                 dbContextOptionsBuilder.EnableDetailedErrors(databseOptions.EnabledDetailedErrors);
 
                 dbContextOptionsBuilder.EnableSensitiveDataLogging(databseOptions.EnabledSensitiveDataLogging);
             });
+
+            services.AddDbContext<OutboxDbContext>((serviceprovider, dbContextOptionsBuilder) =>
+            {
+                var databseOptions = serviceprovider.GetService<IOptions<DatabaseOptions>>()!.Value;
+
+                dbContextOptionsBuilder.UseNpgsql(databseOptions.ConnectionString, options =>
+                {
+                    options.EnableRetryOnFailure(databseOptions.MaxRetryCount);
+
+                    options.CommandTimeout(databseOptions.CommandTimeOut);
+
+                    options.MigrationsHistoryTable(databseOptions.MigrationHistoryTable);
+                });
+
+                dbContextOptionsBuilder.LogTo(x => Console.WriteLine(x));
+
+                dbContextOptionsBuilder.EnableDetailedErrors(databseOptions.EnabledDetailedErrors);
+
+                dbContextOptionsBuilder.EnableSensitiveDataLogging(databseOptions.EnabledSensitiveDataLogging);
+            });
+
+            services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ShortUrlDbContext>());
+
+            services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<OutboxDbContext>());
+
+            services.AddScoped<IUrlRepository, UrlRepository>();
 
             return services;
         }
