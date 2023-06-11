@@ -3,25 +3,67 @@ using System;
 using Infrastructure.Persistences.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Infrastructure.Migrations.OutboxDb
+namespace Infrastructure.Migrations
 {
-    [DbContext(typeof(OutboxDbContext))]
-    partial class OutboxDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ShortUrlDbContext))]
+    [Migration("20230611213002_AddedBoolToOutboxMessages")]
+    partial class AddedBoolToOutboxMessages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("Outbox")
+                .HasDefaultSchema("ShortUrl")
                 .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Domain.Entities.OutBoxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Content");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("Error");
+
+                    b.Property<DateTime>("OccurredOn")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("OccurredOn");
+
+                    b.Property<DateTime?>("ProcessedOn")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("ProcessedOn");
+
+                    b.Property<bool>("Success")
+                        .HasColumnType("bool")
+                        .HasColumnName("success");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("Type");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("OutBoxMessage", "ShortUrl");
+                });
 
             modelBuilder.Entity("Domain.Entities.Url", b =>
                 {
@@ -55,7 +97,7 @@ namespace Infrastructure.Migrations.OutboxDb
 
                     b.HasIndex("ShortUrl");
 
-                    b.ToTable("Url", "Outbox");
+                    b.ToTable("Url", "ShortUrl");
                 });
 #pragma warning restore 612, 618
         }

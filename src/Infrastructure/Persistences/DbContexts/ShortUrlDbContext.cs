@@ -21,6 +21,7 @@ public class ShortUrlDbContext : DbContext
     #region DbSets
 
     public virtual DbSet<Url> Urls { get; set; }
+    public virtual DbSet<OutBoxMessage> OutBoxMessages { get; set; }
 
     #endregion DbSets
 }

@@ -1,6 +1,7 @@
 ﻿using Carter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Presentation.Workers;
 
 namespace Presentation
 {
@@ -9,6 +10,8 @@ namespace Presentation
         public static IServiceCollection AddPresentation(this IServiceCollection services)
         {
             services.AddCarter();
+
+            services.AddHostedService<SendMessagesWorker>();
 
             return services;
         }

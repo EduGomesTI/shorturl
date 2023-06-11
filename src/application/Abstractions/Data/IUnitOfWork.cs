@@ -2,8 +2,6 @@
 {
     public interface IUnitOfWork
     {
-        Task<int> ShortUrlSaveChangesAsync(CancellationToken cancellationToken);
-
-        Task<int> OutBoxSaveChangesAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

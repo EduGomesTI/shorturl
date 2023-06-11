@@ -23,6 +23,45 @@ namespace Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Entities.OutBoxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Content");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("Error");
+
+                    b.Property<DateTime>("OccurredOn")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("OccurredOn");
+
+                    b.Property<DateTime?>("ProcessedOn")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("ProcessedOn");
+
+                    b.Property<bool>("Success")
+                        .HasColumnType("bool")
+                        .HasColumnName("success");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("Type");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("OutBoxMessage", "ShortUrl");
+                });
+
             modelBuilder.Entity("Domain.Entities.Url", b =>
                 {
                     b.Property<int>("Id")
