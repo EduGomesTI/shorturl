@@ -1,10 +1,9 @@
-﻿using Application.Abstractions.Data;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistences.DbContexts;
 
-public class OutboxDbContext : DbContext, IUnitOfWork
+public class OutboxDbContext : DbContext
 {
     public OutboxDbContext(DbContextOptions<OutboxDbContext> options) : base(options)
     {

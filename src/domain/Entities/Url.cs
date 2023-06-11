@@ -1,4 +1,5 @@
-﻿using Syllabore;
+﻿using Domain.Exceptions;
+using Syllabore;
 
 namespace Domain.Entities
 {
@@ -31,9 +32,25 @@ namespace Domain.Entities
         {
             var fantasyName = new NameGenerator();
 
-            var shortUrl = $"{fantasyName.Next()}-{fantasyName.Next()}";
+            var random = new Random();
+
+            var shortUrl = $"{fantasyName.Next()}{random.Next(100)}";
 
             ShortUrl = shortUrl;
+        }
+
+        public void AddShortUrl(string shortUrl)
+        {
+            if(string.IsNullOrWhiteSpace(shortUrl))
+                throw new ShortUrINullException();
+
+            if(shortUrl.Contains("http") || shortUrl.Contains("https"))
+            {
+                var decoded = Uri.UnescapeDataString(shortUrl);
+                shortUrl = decoded.Replace("https://", "").Replace("http://", "");
+            }
+
+            ShortUrl = shortUrl.Trim();
         }
     }
 }

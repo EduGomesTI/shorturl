@@ -1,10 +1,13 @@
 using Application;
+using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Options;
 using Presentation;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -19,6 +22,17 @@ builder.Services
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", build =>
+    {
+        build
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 if(app.Environment.IsDevelopment())
@@ -32,5 +46,6 @@ app.UseSerilogRequestLogging();
 app.UsePresentation();
 
 app.UseHttpsRedirection();
+app.UseCors();
 
 app.Run();

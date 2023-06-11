@@ -1,10 +1,9 @@
-﻿using Application.Abstractions.Data;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistences.DbContexts;
 
-public class ShortUrlDbContext : DbContext, IUnitOfWork
+public class ShortUrlDbContext : DbContext
 {
     public ShortUrlDbContext(DbContextOptions<ShortUrlDbContext> options) : base(options)
     {

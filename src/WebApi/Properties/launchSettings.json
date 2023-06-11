@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "http": {
+    "swagger http": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
@@ -10,10 +10,20 @@
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5260"
     },
-    "https": {
+    "swagger https": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7185;http://localhost:5260"
+    },
+    "TopFive": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "url/topFive",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

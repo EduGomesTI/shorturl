@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Data;
 using Domain.Repositories;
 using Infrastructure.Options;
+using Infrastructure.Persistences;
 using Infrastructure.Persistences.DbContexts;
 using Infrastructure.Persistences.Urls;
 using Microsoft.EntityFrameworkCore;
@@ -53,9 +54,7 @@ namespace Infrastructure
                 dbContextOptionsBuilder.EnableSensitiveDataLogging(databseOptions.EnabledSensitiveDataLogging);
             });
 
-            services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ShortUrlDbContext>());
-
-            services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<OutboxDbContext>());
+            services.AddScoped<IUnitOfWork, UnitOfWOrk>();
 
             services.AddScoped<IUrlRepository, UrlRepository>();
 
