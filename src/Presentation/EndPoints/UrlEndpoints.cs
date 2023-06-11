@@ -29,7 +29,7 @@ namespace Presentation.EndPoints
                 return Results.Ok();
             });
 
-            app.MapPost("/url", async (CreateUrlCommand request, HttpContext context, ISender sender) =>
+            app.MapPost("/url/create", async (CreateUrlCommand request, HttpContext context, ISender sender) =>
             {
                 var createUrlResponse = await sender.Send(request);
 
