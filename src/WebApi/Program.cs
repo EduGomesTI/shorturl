@@ -1,5 +1,4 @@
 using Application;
-using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Options;
 using Presentation;

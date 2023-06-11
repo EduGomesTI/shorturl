@@ -1,6 +1,5 @@
 ﻿using Application.Abstractions.Data;
 using Application.Services;
-using Application.Urls.Commands.CallOriginalUrl;
 using Domain.Entities;
 using Domain.Repositories;
 using FluentValidation;

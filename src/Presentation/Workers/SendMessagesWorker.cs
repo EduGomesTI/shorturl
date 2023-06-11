@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Messaging;
+﻿using Domain.Messaging;
 using Domain.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

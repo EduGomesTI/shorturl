@@ -65,7 +65,7 @@ namespace Presentation.EndPoints
 
             app.MapPost("/url/validate", async (ValidateUrlCommand request, HttpContext context, ISender sender) =>
             {
-                var host = GetApiUrl(context);               
+                var host = GetApiUrl(context);
 
                 ValidateUrlCommand newRequest = request with { ShortUrl = request.ShortUrl.Replace($"{host}/", "") };
 

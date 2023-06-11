@@ -1,9 +1,9 @@
-﻿using Domain.Entities;
+﻿using Application.Services;
+using Domain.Entities;
 using Domain.Repositories;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Application.Services;
 
 namespace Application.Urls.Commands.CallOriginalUrl;
 

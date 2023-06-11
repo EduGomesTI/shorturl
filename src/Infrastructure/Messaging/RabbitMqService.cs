@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using Domain.Messaging;
-using Newtonsoft.Json;
 using RabbitMQ.Client;
 
 namespace Infrastructure.Messaging;

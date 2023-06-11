@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using Application.Services;
-using Application.Urls.Commands.CreateUrl;
 using Domain.Entities;
 using Domain.Repositories;
 using FluentValidation;
@@ -83,7 +82,7 @@ internal sealed class ValidateUrlCommandHandler : IRequestHandler<ValidateUrlCom
         {
             result.AddMessage($"{newUrl.OriginalUrl} retornou a seguinte mensagem: {ex.Message}");
             clientResponse.StatusCode = HttpStatusCode.BadRequest;
-        }      
+        }
 
         result.AddMessage($"{newUrl.OriginalUrl} retornou o seguinte status: {clientResponse.StatusCode}");
         return result;
